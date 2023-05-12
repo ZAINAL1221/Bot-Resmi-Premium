@@ -13,7 +13,7 @@
    "keywords": [
       "wabot-md"
    ],
-    "author": "PAK ZAINAL DEV'S",
+    "author": "Wildan Izzudin",
    "license": "ISC",
    "dependencies": {  
       "@adiwajshing/baileys": "npm:baileys@6.0.8",

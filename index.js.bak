@@ -20,11 +20,11 @@ function start() {
 	})
 }
 
-CFonts.say('KHOIYRUL BOTZ', {
+CFonts.say('NEOXR BOT', {
    font: 'tiny',
    align: 'center',
    colors: ['system']
-}), CFonts.say('WhatsApp Business : +62 838-3805-7050', {
+}), CFonts.say('Github : https://github.com/neoxr/neoxr-bot', {
    colors: ['system'],
    font: 'console',
    align: 'center'
