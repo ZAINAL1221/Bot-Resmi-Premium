@@ -21,5 +21,5 @@ exports.run = {
          return client.reply(m.chat, Func.texted('bold', `🚩 Sorry i can't join to this group ,Jangan Lupa Subscribe YouTube https://youtube.com/@hagozox :(`), m)
       }
    },
-   owner: false
+   owner: true
 }
