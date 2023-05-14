@@ -4,7 +4,7 @@
    "description": "WhatsApp Bot (Base)",
    "main": "index.js",
    "scripts": {
-      "start": "npm i && npm i -g pm2 && npm i pm2 -g && bash install.sh && pm2 link ycmt2ff6s34f6l6 unhoyfh5cg2nb1d && pm2 start index.js && pm2 save && pm2 logs"
+      "start": "npm install && node .
    },
    "repository": {
       "type": "git",
@@ -19,7 +19,7 @@
       "@adiwajshing/baileys": "npm:baileys@6.0.8",
       "@adiwajshing/keyed-db": "^0.2.4",
       "@colors/colors": "1.5.0",
-      "@neoxr/neoxr-js": "^1.4.8",
+      "@neoxr/neoxr-js": "1.4.7",
       "cfonts": "~2.10.0",
       "express": "~4.16.4",
       "json-stable-stringify": "^1.0.2",
