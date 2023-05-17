@@ -1,4 +1,6 @@
-FROM node:14.21.3
+FROM node:lts-buster
+
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - 
 
 RUN apt-get update && \
   apt-get install -y \
