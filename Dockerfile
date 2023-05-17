@@ -13,6 +13,7 @@ RUN apt-get update && \
   apt-get install -y \
   nodejs\
   ffmpeg \
+  bash \
   imagemagick \
   webp && \
   apt-get upgrade -y && \
