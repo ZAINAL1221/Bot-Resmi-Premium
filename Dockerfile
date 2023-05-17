@@ -1,4 +1,6 @@
-FROM node:lts-buster
+FROM node:14-alpine as development
+
+ARG NODE_VERSION=14.21.3
 
 RUN apt-get update && \
   apt-get install -y \
@@ -10,10 +12,10 @@ RUN apt-get update && \
 
 COPY package.json .
 
-RUN npm install
+RUN npm i
 
 COPY . .
 
 EXPOSE 5000
 
-CMD ["node", "run.js"
+CMD ["node", "index.js"]
