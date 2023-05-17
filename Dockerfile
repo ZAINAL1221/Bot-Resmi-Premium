@@ -1,9 +1,10 @@
 FROM node:14-alpine
 
-ARG NODE_VERSION=14.21.3
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - 
 
 RUN apt-get update && \
   apt-get install -y \
+  nodejs\
   ffmpeg \
   imagemagick \
   webp && \
