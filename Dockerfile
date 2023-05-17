@@ -1,6 +1,4 @@
-FROM node:14-alpine
-
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - 
+FROM node:14.21.3
 
 RUN apt-get update && \
   apt-get install -y \
