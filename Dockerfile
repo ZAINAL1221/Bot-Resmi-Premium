@@ -1,4 +1,4 @@
-FROM node:14-alpine as development
+FROM node:14-alpine
 
 ARG NODE_VERSION=14.21.3
 
