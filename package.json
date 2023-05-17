@@ -4,7 +4,7 @@
    "description": "WhatsApp Bot (Base)",
    "main": "index.js",
    "scripts": {
-      "start": "npm install && apt-get update -y && apt-get upgrade -y && apt-get install imagemagick -y && apt-get install ffmpeg -y && apt-get install bash -y && node ."
+      "start": "npm install && apt-get update -y && apt-get upgrade -y && apt-get install imagemagick -y && apt-get install ffmpeg -y && apt-get install bash -y && nvm install 14.x && node ."
    },
    "repository": {
       "type": "git",
