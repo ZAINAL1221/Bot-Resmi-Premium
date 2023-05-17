@@ -1,5 +1,6 @@
 FROM node:14.21.3 AS node_base
 
+RUN npm i
 ENV NODE_VERSION=14.21.3
 RUN apt install -y curl
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
@@ -20,8 +21,6 @@ RUN apt-get update && \
   rm -rf /var/lib/apt/lists/*
 
 COPY package.json .
-
-RUN npm i
 
 COPY . .
 
