@@ -6,10 +6,6 @@
    "scripts": {
       "start": "node ."
    },
-   "engines": {
-      "node": "14.x",
-      "npm": "8.x"
-   },
    "repository": {
       "type": "git",
       "url": "git+https://github.com/neoxr/neoxr-bot.git"
