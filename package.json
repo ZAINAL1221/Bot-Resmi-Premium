@@ -1,6 +1,6 @@
 {
-   "name": "® FuadXy",
-   "version": "3.0.3",
+   "name": "Khoiyrul-Botz",
+   "version": "1.0.0",
    "description": "WhatsApp Bot (Base)",
    "main": "index.js",
    "scripts": {
@@ -17,7 +17,7 @@
    "keywords": [
       "wabot-md"
    ],
-   "author": "Wildan Izzudin",
+   "author": "Pak Zainal Dev's",
    "license": "ISC",
    "dependencies": {
       "@adiwajshing/baileys": "npm:baileys@6.0.8",
