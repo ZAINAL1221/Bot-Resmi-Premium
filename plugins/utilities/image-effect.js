@@ -30,7 +30,7 @@ exports.run = {
             }], m)
          } else {
             if (!args || !args[0]) return
-            if (!/telegra/i.test(args[0])) return
+            if (!/https/i.test(args[0])) return
             let old = new Date()
             await client.sendReact(m.chat, '🕒', m.key)
             let result = Api.ie(command.toLowerCase(), args[0])
@@ -43,5 +43,6 @@ exports.run = {
       }
    },
    error: false,
-   limit: true
+   limit: true,
+   private: true
 }
