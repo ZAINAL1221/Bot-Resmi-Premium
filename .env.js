@@ -1,8 +1,8 @@
 ### Email (Gmail)
-USER_EMAIL_PROVIDER = 'gmail'
-USER_NAME = 'FuadBotz'
-USER_EMAIL = 'fuadbotz01@gmail.com'
-USER_APP_PASSWORD = 'rmqfroxvahkiucqd'
+USER_EMAIL_PROVIDER = 'hagozox@gmail.com'
+USER_NAME = 'hagozox'
+USER_EMAIL = 'hagozox@gmail.com'
+USER_APP_PASSWORD = 'ogrqrvuqqspskzpd'
 
 ### Neoxr API : https://api.neoxr.my.id
 API_KEY = 'Aprilll'
@@ -18,8 +18,8 @@ BRAIN_API_ID = 172389
 BRAIN_API_SECRET = 'ryw2Ek6jmPvDbgL6'
 
 ### Anti Porn : https://api.sightengine.com
-API_USER = ''
-API_SECRET = ''
+API_USER = '1118099373'
+API_SECRET = 'jA8RntKFhyPKMHMvhiu6'
 
 ### Audio Transcription (Whisper) : https://replicate.com/account/api-tokens
 REPLICATE_API_TOKEN = 'r8_ME8LUthsHIvil99IOzHyzx4iEYx1tMF2L48Da'
