@@ -1,8 +1,8 @@
 const { Function, Scraper } = new (require('@neoxr/neoxr-js'))
 // Owner number
-global.owner = '6285954708804'
+global.owner = '6283838057050'
 // Owner name
-global.owner_name = 'FuadXy'
+global.owner_name = "Pak Zainal Dev's"
 // Database name (Default: database)
 global.database = 'database'
 // Ram Limiter (if your server ram is 1GB put 900MB in bytes, later the server will auto restart before using 1GB ram)
@@ -23,7 +23,7 @@ global.timer = 1800000
 // Symbols that are excluded when adding a prefix (Don't change it)
 global.evaluate_chars = ['=>', '~>', '<', '>', '$']
 // Country code that will be automatically blocked by the system, when sending messages in private chat
-global.blocks = ['91', '92', '94', '212']
+global.blocks = ['999']
 // Put target jid to forward friends story
 global.forwards = global.owner + '@c.us'
 // Get neoxr apikey by registering at https://api.neoxr.my.id
@@ -31,9 +31,9 @@ global.Api = new (require('./neoxrApi'))(process.env.API_KEY)
 // Timezone (Default : Asia/Jakarta)
 global.timezone = 'Asia/Jakarta'
 // Bot name
-global.botname = `© ғᴜᴀᴅʙᴏᴛᴢ v${require('package.json').version} (Premium Script)`
+global.botname = `© ᴋʜᴏɪʏʀᴜʟ-ʙᴏᴛᴢ  > ᴘᴜʙʟɪᴄ ʙᴏᴛ <`
 // Footer text
-global.footer = 'ꜱɪᴍᴘʟᴇ ᴡʜᴀᴛꜱᴀᴘᴘ ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ ғᴜᴀᴅxʏ ッ'
+global.footer = "ꜱɪᴍᴘʟᴇ ᴡʜᴀᴛꜱᴀᴘᴘ ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ ᴘᴀᴋ ᴢᴀɪɴᴀʟ ᴅᴇᴠ'ꜱ ッ"
 // Scraper
 global.scrap = Scraper
 // Function
