@@ -1,6 +1,6 @@
 const fs = require('fs')
 exports.run = {
-   usage: ['menu', 'help', 'bot', 'command'],
+   usage: ['menu', 'help', 'command'],
    hidden: ['menutype'],
    async: async (m, {
       client,
@@ -37,7 +37,7 @@ exports.run = {
                   }
                })
                const print = commands.sort((a, b) => a.usage.localeCompare(b.usage)).map(v => `◦  ${isPrefix + v.usage} ${v.use}`).join('\n')
-               return m.reply(print)
+               return m.reply(Func.Styles(print))
             } else {
                let filter = Object.entries(plugins).filter(([_, obj]) => obj.run.usage)
                let cmd = Object.fromEntries(filter)
@@ -45,7 +45,7 @@ exports.run = {
                for (let name in cmd) {
                   let obj = cmd[name].run
                   if (!cmd) continue
-                  if (!obj.category) continue
+                  if (!obj.category || global.db.setting.hidden.includes(obj.category)) continue
                   if (Object.keys(category).includes(obj.category)) category[obj.category].push(obj)
                   else {
                      category[obj.category] = []
@@ -72,7 +72,7 @@ exports.run = {
             for (let name in cmd) {
                let obj = cmd[name].run
                if (!cmd) continue
-               if (!obj.category) continue
+               if (!obj.category || global.db.setting.hidden.includes(obj.category)) continue
                if (Object.keys(category).includes(obj.category)) category[obj.category].push(obj)
                else {
                   category[obj.category] = []
@@ -105,8 +105,8 @@ exports.run = {
                })
                print += commands.sort((a, b) => a.usage.localeCompare(b.usage)).map(v => `	◦  ${isPrefix + v.usage} ${v.use}`).join('\n')
             }
-            client.sendMessageModify(m.chat, print + '\n\n' + global.footer, m, {
-               ads: true,
+            client.sendMessageModify(m.chat, Func.Styles(print) + '\n\n' + global.footer, m, {
+               ads: false,
                largeThumb: true,
                url: global.db.setting.link
             })
@@ -140,7 +140,7 @@ exports.run = {
                      return `│  ◦  ${isPrefix + v.usage} ${v.use}`
                   }
                }).join('\n')
-               return m.reply(print)
+               return m.reply(Func.Styles(print))
             } else {
                let filter = Object.entries(plugins).filter(([_, obj]) => obj.run.usage)
                let cmd = Object.fromEntries(filter)
@@ -148,7 +148,7 @@ exports.run = {
                for (let name in cmd) {
                   let obj = cmd[name].run
                   if (!cmd) continue
-                  if (!obj.category) continue
+                  if (!obj.category || global.db.setting.hidden.includes(obj.category)) continue
                   if (Object.keys(category).includes(obj.category)) category[obj.category].push(obj)
                   else {
                      category[obj.category] = []
@@ -175,7 +175,7 @@ exports.run = {
             for (let name in cmd) {
                let obj = cmd[name].run
                if (!cmd) continue
-               if (!obj.category) continue
+               if (!obj.category || global.db.setting.hidden.includes(obj.category)) continue
                if (Object.keys(category).includes(obj.category)) category[obj.category].push(obj)
                else {
                   category[obj.category] = []
@@ -216,7 +216,7 @@ exports.run = {
                   }
                }).join('\n')
             }
-            client.sendMessageModify(m.chat, print + '\n\n' + global.footer, m, {
+            client.sendMessageModify(m.chat, Func.Styles(print) + '\n\n' + global.footer, m, {
                ads: false,
                largeThumb: true,
                url: global.db.setting.link
@@ -228,7 +228,7 @@ exports.run = {
             for (let name in cmd) {
                let obj = cmd[name].run
                if (!cmd) continue
-               if (!obj.category) continue
+               if (!obj.category || global.db.setting.hidden.includes(obj.category)) continue
                if (Object.keys(category).includes(obj.category)) category[obj.category].push(obj)
                else {
                   category[obj.category] = []
@@ -282,7 +282,7 @@ exports.run = {
                },
                type: 1
             }]
-            client.sendButton(m.chat, global.db.setting.cover, print, global.footer, m, buttons, {
+            client.sendButton(m.chat, global.db.setting.cover, Func.Styles(print), global.footer, m, buttons, {
                document: true
             })
          }
