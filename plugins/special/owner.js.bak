@@ -9,9 +9,9 @@ exports.run = {
          number: global.owner,
          about: 'Owner & Creator'
       }], m, {
-         org: "Pak Zainal Dev's Network",
-         website: 'https://hagozox.repl.co/',
-         email: 'hagozox@gmail.com'
+         org: 'Neoxr Network',
+         website: 'https://api.neoxr.my.id',
+         email: 'contact@neoxr.my.id'
       })
    },
    error: false,
