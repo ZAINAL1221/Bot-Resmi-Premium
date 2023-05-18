@@ -46,6 +46,8 @@ exports.run = {
                   antidelete: true,
                   antilink: false,
                   antivirtex: false,
+                  antiporn: false,
+                  captcha: false,
                   filter: false,
                   game: true,
                   left: false,
@@ -67,5 +69,6 @@ exports.run = {
    },
    error: false,
    cache: true,
+   private: true,
    location: __filename
 }

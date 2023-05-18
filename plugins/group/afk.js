@@ -7,9 +7,10 @@ exports.run = {
       text
    }) => {
       try {
-         let user = global.db.users.find(v => v.jid == m.sender)
-         user.afk = +new Date
-         user.afkReason = text
+         let users = global.db.users.find(v => v.jid == m.sender)
+         users.afk = +new Date
+         users.afkReason = text
+         users.afkObj = m
          let tag = m.sender.split`@` [0]
          return client.reply(m.chat, Func.texted('bold', `🚩 @${tag} is now AFK!`), m)
       } catch {
