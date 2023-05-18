@@ -1,9 +1,10 @@
 const cron = require('node-cron')
-const fs = require('fs')
 module.exports = async (client, m, plugins, store) => {
    try {
+      require('./system/schema')(m)
       const isOwner = [client.decodeJid(client.user.id).split`@` [0], global.owner, ...global.db.setting.owners].map(v => v + '@s.whatsapp.net').includes(m.sender)
       const isPrem = (global.db.users.some(v => v.jid == m.sender) && global.db.users.find(v => v.jid == m.sender).premium) || isOwner
+      const isAuth = (global.db.users.some(v => v.jid == m.sender) && global.db.users.find(v => v.jid == m.sender).authentication) || isOwner
       const groupMetadata = m.isGroup ? await client.groupMetadata(m.chat) : {}
       const participants = m.isGroup ? groupMetadata.participants : [] || []
       const adminList = m.isGroup ? await client.groupAdmin(m.chat) : [] || []
@@ -15,9 +16,14 @@ module.exports = async (client, m, plugins, store) => {
          users = global.db.users.find(v => v.jid == m.sender),
          setting = global.db.setting
       const body = typeof m.text == 'string' ? m.text : false
-      if (!users || !chats) return require('./system/schema')(m)
+      if (!setting.online) await client.sendPresenceUpdate('unavailable', m.chat)
+      if (setting.online) await client.sendPresenceUpdate('available', m.chat)
       if (setting.debug && !m.fromMe && isOwner) client.reply(m.chat, Func.jsonFormat(m), m)
-      if (m.isGroup && !isBotAdmin) groupSet.localonly = false
+      if (!m.fromMe && m.isGroup && groupSet.antibot && m.isBot && isBotAdmin && (!isOwner || !isAdmin)) return m.reply(Func.texted('bold', `🚩 No other bots are allowed here.`)).then(async () => await client.groupParticipantsUpdate(m.chat, [m.sender], 'remove'))
+      if (m.isGroup && !isBotAdmin) { 
+     	groupSet.captcha = false
+         groupSet.localonly = false
+      }
       if (m.isGroup && groupSet.autoread) await client.readMessages([m.key])
       if (!m.isGroup) await client.readMessages([m.key])
       if (m.isGroup) groupSet.activity = new Date() * 1
@@ -36,16 +42,49 @@ module.exports = async (client, m, plugins, store) => {
             users.limit = global.limit
          })
       }
-      if (users) users.lastseen = new Date() * 1
+      if (users) {
+         users.name = m.pushName
+         users.lastseen = new Date() * 1
+      }
       if (chats) {
          chats.lastseen = new Date() * 1
          chats.chat += 1
       }
       if (m.isGroup && !m.isBot && users && users.afk > -1) {
-         client.reply(m.chat, `You are back online after being offline for : ${Func.texted('bold', Func.toTime(new Date - users.afk))}\n\n• ${Func.texted('bold', 'Reason')}: ${users.afkReason ? users.afkReason : '-'}`, m)
+         client.reply(m.chat, `You are back online after being offline for : ${Func.texted('bold', Func.toTime(new Date - users.afk))}\n\n➠ ${Func.texted('bold', 'Reason')}: ${users.afkReason ? users.afkReason : '-'}`, m)
          users.afk = -1
          users.afkReason = ''
+         users.afkObj = {}
       }
+      client.ev.on('presence.update', update => {
+         const {
+            id,
+            presences
+         } = update
+         if (id.endsWith('g.us')) {
+            for (let jid in presences) {
+               if (!presences[jid] || jid == client.decodeJid(client.user.id)) continue
+               if ((presences[jid].lastKnownPresence === 'composing' || presences[jid].lastKnownPresence === 'recording') && global.db.users.find(v => v.jid == jid) && global.db.users.find(v => v.jid == jid).afk > -1) {
+                  client.reply(id, `System detects activity from @${jid.replace(/@.+/, '')} after being offline for : ${Func.texted('bold', Func.toTime(new Date - global.db.users.find(v => v.jid == jid).afk))}\n\n➠ ${Func.texted('bold', 'Reason')} : ${global.db.users.find(v => v.jid == jid).afkReason ? global.db.users.find(v => v.jid == jid).afkReason : '-'}`, global.db.users.find(v => v.jid == jid).afkObj)
+                  global.db.users.find(v => v.jid == jid).afk = -1
+                  global.db.users.find(v => v.jid == jid).afkReason = ''
+                  global.db.users.find(v => v.jid == jid).afkObj = {}
+               }
+            }
+         } else {}
+      })
+      if (m.isGroup && !m.fromMe) {
+         let now = new Date() * 1
+         if (!groupSet.member[m.sender]) {
+            groupSet.member[m.sender] = {
+               lastseen: now,
+               warning: 0
+            }
+         } else {
+            groupSet.member[m.sender].lastseen = now
+         }
+      }
+      // reset limit
       cron.schedule('00 00 * * *', () => {
          setting.lastReset = new Date * 1
          global.db.users.filter(v => v.limit < global.limit && !v.premium).map(v => v.limit = global.limit)
@@ -77,6 +116,23 @@ module.exports = async (client, m, plugins, store) => {
       let isPrefix = (setting.multiprefix ? setting.prefix.includes(getPrefix) : setting.onlyprefix == getPrefix) ? getPrefix : undefined
       component.Logs(client, m, isPrefix)
       if (m.isBot || m.chat.endsWith('broadcast')) return
+      client.ev.on('presence.update', update => {
+         const {
+            id,
+            presences
+         } = update
+         if (id.endsWith('g.us')) {
+            for (let jid in presences) {
+               if (!presences[jid] || jid == client.decodeJid(client.user.id)) continue
+               if ((presences[jid].lastKnownPresence === 'composing' || presences[jid].lastKnownPresence === 'recording') && global.db.users.find(v => v.jid == jid) && global.db.users.find(v => v.jid == jid).afk > -1) {
+                  client.reply(id, `System detects activity from @${jid.replace(/@.+/, '')} after being offline for : ${Func.texted('bold', Func.toTime(new Date - global.db.users.find(v => v.jid == jid).afk))}\n\n➠ ${Func.texted('bold', 'Reason')} : ${global.db.users.find(v => v.jid == jid).afkReason ? global.db.users.find(v => v.jid == jid).afkReason : '-'}`, global.db.users.find(v => v.jid == jid).afkObj)
+                  global.db.users.find(v => v.jid == jid).afk = -1
+                  global.db.users.find(v => v.jid == jid).afkReason = ''
+                  global.db.users.find(v => v.jid == jid).afkObj = {}
+               }
+            }
+         } else {}
+      })
       if (((m.isGroup && !groupSet.mute) || !m.isGroup) && !users.banned) {
          if (body && body == isPrefix) {
             if (m.isGroup && groupSet.mute || !isOwner) return
@@ -103,7 +159,6 @@ module.exports = async (client, m, plugins, store) => {
       }
       if (body && isPrefix && commands.includes(command) || body && !isPrefix && commands.includes(command) && setting.noprefix || body && !isPrefix && commands.includes(command) && global.evaluate_chars.includes(command)) {
          const is_commands = Object.fromEntries(Object.entries(plugins).filter(([name, prop]) => prop.run.usage))
-         let matcher = Func.matcher(command, commands).filter(v => v.accuracy >= 60)
          try {
             if (new Date() * 1 - chats.command > (global.cooldown * 1000)) {
                chats.command = new Date() * 1
@@ -135,13 +190,28 @@ module.exports = async (client, m, plugins, store) => {
             if (setting.self && !isOwner && !m.fromMe) return
             if (setting.pluginDisable.includes(name)) return client.reply(m.chat, Func.texted('bold', `🚩 Plugin disabled by Owner.`), m)
             if (!m.isGroup && !['owner'].includes(name) && chats && !isPrem && !users.banned && new Date() * 1 - chats.lastchat < global.timer) continue
-            if (!m.isGroup && !['owner'].includes(name) && chats && !isPrem && !users.banned && setting.groupmode) return client.sendMessageModify(m.chat, `🚩 Using bot in private chat only for premium user, upgrade to premium plan only Rp. 20,000,- to get 1K limits for 1 month.\n\nIf you want to buy contact *${prefixes[0]}owner*`, m, {
+            if (!m.isGroup && !['owner', 'menfess', 'verify'].includes(name) && chats && !isPrem && !users.banned && setting.groupmode) return client.sendMessageModify(m.chat, `🚩 Using bot in private chat only for premium user, upgrade to premium plan only Rp. 10,000,- to get 1K limits for 1 month.\n\nIf you want to buy contact *${prefixes[0]}owner*`, m, {
                largeThumb: true,
                thumbnail: await Func.fetchBuffer('https://telegra.ph/file/0b32e0a0bb3b81fef9838.jpg'),
                url: setting.link
             }).then(() => chats.lastchat = new Date() * 1)
-            if (!['me', 'owner'].includes(name) && users && (users.banned || new Date - users.banTemp < global.timer)) return
-            if (m.isGroup && !['activation', 'groupinfo'].includes(name) && groupSet.mute) continue
+            if (!['me', 'owner', 'exec'].includes(name) && users && (users.banned || new Date - users.banTemp < global.timer)) return
+            if (!['verify', 'exec'].includes(name) && !m.isGroup && users && !users.banned && !users.verified && setting.verify) users.attempt += 1
+            let teks = `🚩 *[ ${users.attempt} / 5 ]* Verifikasi nomor dengan menggunakan email, 1 email untuk memverifikasi 1 nomor WhatsApp. Silahkan ikuti step by step berikut :\n\n– *STEP 1*\nGunakan perintah *${isPrefix ? isPrefix : ''}reg <email>* untuk mendapatkan kode verifikasi melalui email.\nContoh : *${isPrefix ? isPrefix : ''}reg neoxrbot@gmail.com*\n\n– *STEP 2*\nBuka email dan cek pesan masuk atau di folder spam, setelah kamu mendapat kode verifikasi silahkan kirim kode tersebut kepada bot.\n\n*Note* :\nMengabaikan pesan ini sebanyak *5x* kamu akan di banned dan di blokir, untuk membuka banned dan blokir dikenai biaya sebesar Rp. 10,000`
+            if (users && !users.banned && !users.verified && users.attempt >= 5 && setting.verify) return client.reply(m.isGroup ? m.sender : m.chat, Func.texted('bold', `🚩 [ ${users.attempt} / 5 ] : Kamu mengabaikan pesan verifikasi tapi tenang masih ada bot lain kok, banned thanks. (^_^)`), m).then(() => {
+               users.banned = true
+               users.attempt = 0
+               users.code = ''
+               users.codeExpire = 0
+               users.email = ''
+               client.updateBlockStatus(m.sender, 'block')
+            })
+            if (!['verify', 'exec'].includes(name) && !m.isGroup && users && !users.banned && !users.verified && setting.verify) return client.sendMessageModify(m.chat, teks, m, {
+               largeThumb: true,
+               thumbnail: await Func.fetchBuffer('https://telegra.ph/file/31601aee3fdf941bebbc4.jpg')
+            })
+            if (!['verify', 'exec'].includes(name) && m.isGroup && users && !users.banned && !users.verified && setting.verify) return client.reply(m.chat, `🚩 Your number has not been verified, verify by sending *${isPrefix ? isPrefix : ''}reg <email>* in private chat.`, m)
+            if (m.isGroup && !['activation', 'groupinfo', 'exec', 'makeAdmin'].includes(name) && groupSet.mute) continue
             if (m.isGroup && !isOwner && /chat.whatsapp.com/i.test(text)) return client.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
             if (cmd.cache && cmd.location) {
                let file = require.resolve(cmd.location)
@@ -162,12 +232,16 @@ module.exports = async (client, m, plugins, store) => {
                client.reply(m.chat, global.status.owner, m)
                continue
             }
+            if (cmd.auth && !isAuth) {
+               client.reply(m.chat, global.status.auth, m)
+               continue
+            }
             if (cmd.premium && !isPrem) {
                client.reply(m.chat, global.status.premium, m)
                continue
             }
             if (cmd.limit && users.limit < 1) {
-               return client.reply(m.chat, `🚩 Your bot usage has reached the limit and will be will be reset after 12 hours.\n\nTo get more limits, upgrade to a premium plan send *${prefixes[0]}premium*`, m).then(() => users.premium = false)
+               return client.reply(m.chat, `🚩 Limit penggunaan bot mu sudah habis dan akan di reset pada pukul 00.00 WIB\n\nUntuk mendapatkan lebih banyak limit upgrade ke premium kirim *${prefixes[0]}premium*`, m).then(() => users.premium = false)
                continue
             }
             if (cmd.limit && users.limit > 0) {
@@ -193,6 +267,18 @@ module.exports = async (client, m, plugins, store) => {
                client.reply(m.chat, global.status.private, m)
                continue
             }
+            if (cmd.game && !setting.games) {
+               client.reply(m.chat, global.status.gameSystem, m)
+               continue
+            }
+            if (cmd.game && Func.level(users.point)[0] >= 50) {
+               client.reply(m.chat, global.status.gameLevel, m)
+               continue
+            }
+            if (cmd.game && m.isGroup && !groupSet.game) {
+               client.reply(m.chat, global.status.gameInGroup, m)
+               continue
+            }
             cmd.async(m, {
                client,
                args,
@@ -212,6 +298,7 @@ module.exports = async (client, m, plugins, store) => {
             break
          }
       } else {
+         let prefixes = setting.multiprefix ? setting.prefix : [setting.onlyprefix]
          const is_events = Object.fromEntries(Object.entries(plugins).filter(([name, prop]) => !prop.run.usage))
          for (let name in is_events) {
             let event = is_events[name].run
@@ -223,7 +310,7 @@ module.exports = async (client, m, plugins, store) => {
             if (m.isGroup && !['exec'].includes(name) && groupSet.mute) continue
             if (setting.pluginDisable.includes(name)) continue
             if (!m.isGroup && chats && !isPrem && !users.banned && new Date() * 1 - chats.lastchat < global.timer) continue
-            if (!m.isGroup && chats && !isPrem && !users.banned && !['chatAI'].includes(name) && setting.groupmode) return client.sendMessageModify(m.chat, `🚩 Using bot in private chat only for premium user, upgrade to premium plan only Rp. 10,000,- to get 1K limits for 1 month.\n\nIf you want to buy contact *${prefixes[0]}owner*`, m, {
+            if (!m.isGroup && chats && !isPrem && !users.banned && !['chatAI', 'menfess_ev'].includes(name) && setting.groupmode) return client.sendMessageModify(m.chat, `🚩 Using bot in private chat only for premium user, upgrade to premium plan only Rp. 10,000,- to get 1K limits for 1 month.\n\nIf you want to buy contact *${prefixes[0]}owner*`, m, {
                largeThumb: true,
                thumbnail: await Func.fetchBuffer('https://telegra.ph/file/0b32e0a0bb3b81fef9838.jpg'),
                url: setting.link
@@ -235,14 +322,17 @@ module.exports = async (client, m, plugins, store) => {
             if (!['anti_link', 'anti_tagall', 'anti_virtex', 'filter', 'exec'].includes(name) && groupSet && groupSet.mute) continue
             if (event.error) continue
             if (event.owner && !isOwner) continue
-            if (event.moderator && !isMod) continue
             if (event.group && !m.isGroup) continue
             if (event.limit && users.limit < 1) continue
             if (event.botAdmin && !isBotAdmin) continue
             if (event.admin && !isAdmin) continue
             if (event.private && m.isGroup) continue
+            if (event.download && users && !users.verified && body && Func.socmed(body) && setting.verify) return client.reply(m.chat, `🚩 Your number has not been verified, verify by sending *${prefixes[0]}reg <email>* in private chat.`, m)
             if (event.download && (!setting.autodownload || (body && global.evaluate_chars.some(v => body.startsWith(v))))) continue
             if (event.premium && !isPrem && body && Func.socmed(body)) return client.reply(m.chat, global.status.premium, m)
+            if (event.game && !setting.games) continue
+            if (event.game && Func.level(users.point)[0] >= 50) continue
+            if (event.game && m.isGroup && !groupSet.game) continue
             event.async(m, {
                client,
                body,
