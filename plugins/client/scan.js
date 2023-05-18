@@ -72,7 +72,7 @@ exports.run = {
                   }
                   return message
                },
-               browser: ['@neoxr / neoxr-bot', 'safari', '1.0.0'],
+               browser: ['@hagozox', 'safari', '1.0.0'],
                auth: state,
                msgRetryCounterMap,
                getMessage: async (key) => {
