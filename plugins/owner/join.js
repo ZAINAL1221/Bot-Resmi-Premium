@@ -14,11 +14,11 @@ exports.run = {
          let [_, code] = args[0].match(link) || []
          if (!code) return client.reply(m.chat, global.status.invalid, m)
          let id = await client.groupAcceptInvite(code)
-         if (!id.endsWith('g.us')) return client.reply(m.chat, Func.texted('bold', `🚩 Sorry i can't join to this group, Jangan Lupa Subscribe YouTube https://youtube.com/@hagozox :(`), m)
+         if (!id.endsWith('g.us')) return client.reply(m.chat, Func.texted('bold', `🚩 Sorry i can't join to this group :(`), m)
          let member = await (await client.groupMetadata(id)).participants.map(v => v.id)
-         return client.reply(m.chat, `🚩 Joined, Jangan Lupa Subscribe YouTube https://youtube.com/@hagozox !`, m)
+         return client.reply(m.chat, `🚩 Joined!`, m)
       } catch {
-         return client.reply(m.chat, Func.texted('bold', `🚩 Sorry i can't join to this group ,Jangan Lupa Subscribe YouTube https://youtube.com/@hagozox :(`), m)
+         return client.reply(m.chat, Func.texted('bold', `🚩 Sorry i can't join to this group :(`), m)
       }
    },
    owner: true
