@@ -16,25 +16,13 @@ exports.run = {
          let json = await Api.twitter(args[0])
          let old = new Date()
          if (!json.status) return client.reply(m.chat, Func.jsonFormat(json), m)
-         let caption = `乂  *T W I T T E R*\n\n`
-         caption += `	◦  *Author* : ${json.author}\n`
-         caption += `	◦  *Likes* : ${json.like}\n`
-         caption += `	◦  *Retweets* : ${json.retweet}\n`
-         caption += `	◦  *Comments* : ${json.reply}\n\n`
-         caption += global.footer
-         for (let i = 0; i < json.data.length; i++) {
-            if (/jpg|mp4/.test(json.data[i].type)) {
-               client.sendFile(m.chat, json.data[i].url, '', caption, m)
-               await Func.delay(1500)
-            } else if (json.data[i].type == 'gif') {
-               client.sendFile(m.chat, json.data[i].url, '', caption, m, {
-                  gif: true
-               })
-            }
+         for (let v of json.data) {
+            client.sendFile(m.chat, v.url, '', `◦ *Type* : ${v.title}`, m)
+            await Func.delay(1500)
          }
       } catch (e) {
          console.log(e)
-         return client.reply(m.chat, global.status.error, m)
+         return client.reply(m.chat, Func.jsonFormat(e), m)
       }
    },
    error: false,
