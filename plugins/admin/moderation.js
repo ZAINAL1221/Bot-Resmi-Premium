@@ -1,5 +1,5 @@
 exports.run = {
-   usage: ['antidelete', 'antilink', 'antivirtex', 'left', 'filter', 'localonly', 'welcome'],
+   usage: ['antiporn', 'antibot', 'antidelete', 'antilink', 'antivirtex', 'captcha', 'left', 'filter', 'localonly', 'welcome', 'game'],
    use: 'on / off',
    category: 'admin tools',
    async: async (m, {
@@ -20,11 +20,15 @@ exports.run = {
          description: `[ Status : OFF ]`
       }]
       let type = command.toLowerCase()
-      if (!isBotAdmin && /antilink|antivirtex|filter|localonly/.test(type)) return client.reply(m.chat, global.status.botAdmin, m)
-      if (!args || !args[0]) return client.reply(m.chat, `🚩 *Current status* : [ ${setting[type] ? 'ON' : 'OFF'} ]\n\nUse the *on* or *off* argument to use this feature.`, m)
+      if (!isBotAdmin && /antiporn|captcha|antibot|antilink|antivirtex|filter|localonly/.test(type)) return client.reply(m.chat, global.status.botAdmin, m)
+      if (!args || !args[0]) return client.sendList(m.chat, '', `🚩 *Current status* : [ ${setting[type] ? 'ON' : 'OFF'} ]`, '', 'Tap!', [{
+         rows
+      }], m)
       let option = args[0].toLowerCase()
       let optionList = ['on', 'off']
-      if (!optionList.includes(option)) return client.reply(m.chat, `🚩 *Current status* : [ ${setting[type] ? 'ON' : 'OFF'} ]\n\nUse the *on* or *off* argument to use this feature.`, m)
+      if (!optionList.includes(option)) return client.sendList(m.chat, '', `🚩 *Current status* : [ ${setting[type] ? 'ON' : 'OFF'} ]`, '', 'Tap!', [{
+         rows
+      }], m)
       let status = option != 'on' ? false : true
       if (setting[type] == status) return client.reply(m.chat, Func.texted('bold', `🚩 ${Func.ucword(command)} has been ${option == 'on' ? 'activated' : 'inactivated'} previously.`), m)
       setting[type] = status
