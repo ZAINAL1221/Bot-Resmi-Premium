@@ -21,7 +21,7 @@ RUN apt-get update && \
 
 COPY package.json .
 
-RUN yarn install
+RUN npm i
 
 COPY . .
 
