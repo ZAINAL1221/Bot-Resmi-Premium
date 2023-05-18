@@ -20,7 +20,7 @@ exports.run = {
 let info = () => {
    return `This bot was created and developed with the purpose of *learning*.
    
-Source :
+Free Script :
 - https://github.com/neoxr/neoxr-bot
 
 65% of the data sent from this bot comes from Rest API: https://api.neoxr.my.id`

@@ -10,8 +10,8 @@ exports.run = {
          about: 'Owner & Creator'
       }], m, {
          org: 'Neoxr Network',
-         website: 'https://neoxr.my.id',
-         email: 'admin@neoxr.my.id'
+         website: 'https://api.neoxr.my.id',
+         email: 'contact@neoxr.my.id'
       })
    },
    error: false,

@@ -29,6 +29,7 @@ exports.run = {
             banned,
             blocked: blockList.length,
             premium,
+            bots: global.db.bots,
             hitstat,
             uptime: Func.toTime(process.uptime() * 1000)
          }
@@ -57,6 +58,8 @@ const statistic = (stats, system) => {
 │  ◦  ${Func.texted('bold', Func.formatNumber(stats.mimic))} Mimics Target
 │  ◦  ${Func.texted('bold', Func.formatNumber(stats.premium))} Premium Users
 │  ◦  ${Func.texted('bold', Func.formatNumber(stats.hitstat))} Commands Hit
+│  ◦  ${Func.texted('bold', Func.formatNumber(stats.bots.length))} Authenticated Bots
+│  ◦  ${Func.texted('bold', Func.formatNumber(stats.bots.filter(v => v.is_connected).length))} Connected Bots
 └  ◦  Runtime : ${Func.texted('bold', stats.uptime)}
 
  –  *S Y S T E M*
@@ -68,6 +71,10 @@ const statistic = (stats, system) => {
 │  ◦  ${Func.texted('bold', system.online ? '[ √ ]' : '[ × ]')}  Always Online
 │  ◦  ${Func.texted('bold', system.self ? '[ √ ]' : '[ × ]')}  Self Mode
 │  ◦  ${Func.texted('bold', system.noprefix ? '[ √ ]' : '[ × ]')}  No Prefix
+│  ◦  ${Func.texted('bold', system.levelup ? '[ √ ]' : '[ × ]')}  Level UP
+│  ◦  ${Func.texted('bold', system.games ? '[ √ ]' : '[ × ]')}  Game Features
+│  ◦  ${Func.texted('bold', system.limiter ? '[ √ ]' : '[ × ]')}  Ram Limiter
+│  ◦  ${Func.texted('bold', system.verify ? '[ √ ]' : '[ × ]')}  Email Verification
 │  ◦  Prefix : ${Func.texted('bold', system.multiprefix ? '( ' + system.prefix.map(v => v).join(' ') + ' )' : '( ' + system.onlyprefix + ' )')}
 └  ◦  Reset At : ${moment(system.lastReset).format('DD/MM/YYYY HH:mm')}
 
@@ -83,6 +90,8 @@ ${global.footer}`
 	◦  ${Func.texted('bold', Func.formatNumber(stats.mimic))} Mimics Target
 	◦  ${Func.texted('bold', Func.formatNumber(stats.premium))} Premium Users
 	◦  ${Func.texted('bold', Func.formatNumber(stats.hitstat))} Commands Hit
+	◦  ${Func.texted('bold', Func.formatNumber(stats.bots.length))} Authenticated Bots
+	◦  ${Func.texted('bold', Func.formatNumber(stats.bots.filter(v => v.is_connected).length))} Connected Bots
 	◦  Runtime : ${Func.texted('bold', stats.uptime)}
 
 乂  *S Y S T E M*
@@ -94,6 +103,10 @@ ${global.footer}`
 	◦  ${Func.texted('bold', system.online ? '[ √ ]' : '[ × ]')}  Always Online
 	◦  ${Func.texted('bold', system.self ? '[ √ ]' : '[ × ]')}  Self Mode
 	◦  ${Func.texted('bold', system.noprefix ? '[ √ ]' : '[ × ]')}  No Prefix
+	◦  ${Func.texted('bold', system.levelup ? '[ √ ]' : '[ × ]')}  Level UP
+	◦  ${Func.texted('bold', system.games ? '[ √ ]' : '[ × ]')}  Game Features
+	◦  ${Func.texted('bold', system.limiter ? '[ √ ]' : '[ × ]')}  Ram Limiter
+	◦  ${Func.texted('bold', system.verify ? '[ √ ]' : '[ × ]')}  Email Verification
 	◦  Prefix : ${Func.texted('bold', system.multiprefix ? '( ' + system.prefix.map(v => v).join(' ') + ' )' : '( ' + system.onlyprefix + ' )')}
 	◦  Reset At : ${moment(system.lastReset).format('DD/MM/YYYY HH:mm')}
 

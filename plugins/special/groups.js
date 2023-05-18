@@ -10,22 +10,25 @@ exports.run = {
       let groupList = async () => Object.entries(await client.groupFetchAllParticipating()).slice(0).map(entry => entry[1])
       let groups = await groupList()
       let rows = []
-      let caption = `乂  *G R O U P - L I S T*\n\n`
-      caption += `*“Bot has joined into ${groups.length} groups, send _${isPrefix}gc_ or _${isPrefix}gcopt_ to show all setup options.”*\n\n`
-      groups.map((x, i) => {
+      groups.map(x => {
          let v = global.db.groups.find(v => v.jid == x.id)
          if (v) {
-            caption += `›  *${(i + 1)}.* ${x.subject}\n`
-            caption += `   *💳* : ${x.id.split`@`[0]}\n`
-            caption += `${v.stay ? '   FOREVER' : (v.expired == 0 ? '   NOT SET' : '   ' + Func.timeReverse(v.expired - new Date() * 1))} | ${x.participants.length} | ${(v.mute ? 'OFF' : 'ON')} | ${moment(v.activity).format('DD/MM/YY HH:mm:ss')}\n\n`
+            rows.push({
+               title: x.subject,
+               rowId: `${isPrefix}gc ${x.id}`,
+               description: `[ ${v.stay ? 'FOREVER' : (v.expired == 0 ? 'NOT SET' : Func.timeReverse(v.expired - new Date() * 1))}  | ${x.participants.length} | ${(v.mute ? 'OFF' : 'ON')} | ${moment(v.activity).format('DD/MM/YY HH:mm:ss')} ]`
+            })
          } else {
             global.db.groups.push({
                jid: x.id,
                activity: new Date * 1,
+               antibot: true,
                autoread: true,
                antidelete: true,
                antilink: false,
+               antiporn: false,
                antivirtex: false,
+               captcha: false,
                filter: false,
                game: true,
                left: false,
@@ -40,9 +43,11 @@ exports.run = {
             })
          }
       })
-      caption += `${global.footer}`
-      m.reply(caption)
+      client.sendList(m.chat, '', `Bot has joined to ${groups.length} groups. 🍟`, '', 'Tap!', [{
+         rows
+      }], m)
    },
    cache: true,
+   private: true,
    location: __filename
 }
