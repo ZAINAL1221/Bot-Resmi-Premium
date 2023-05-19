@@ -4,11 +4,10 @@
    "description": "WhatsApp Bot (Base)",
    "main": "index.js",
    "scripts": {
-      "start": "apt-get update -y && apt-get upgrade -y && npm install && node ."
+      "start": "apt-get update -y && apt-get upgrade -y && npm update && npm install && node ."
    },
    "engines": {
-      "node": "14.x",
-      "npm": "8.x"
+      "node": "14.x"
    },
    "repository": {
       "type": "git",
