@@ -23,10 +23,10 @@ let info = () => {
 Free Script :
 - https://github.com/neoxr/neoxr-bot
 
-YouTube Admin :
+Youtube Owner :
 - https://youtube.com/@hagozox
 
-65% of the data sent from this bot comes from Rest API: https://api.neoxr.my.id`
+65% of the data sent from this bot comes from Rest API: https://api.neoxr.my.id | https://hagozox.repl.co/`
 }
 
 const tnc = () => {
@@ -42,7 +42,7 @@ const tnc = () => {
 
 ➠ Don't search & create adult content (+18), eg: make stickers from nude photos or search for ASMR sighs.
 
-➠ If you want to unblock and unbanned, each will be charged a fee of Rp. 5,000,-
+➠ If you want to unblock and unbanned, each will be charged a fee of Rp. 2,000,-
 
 ➠ Spammers will be permanently banned for free and premium users (+ no refund).
 

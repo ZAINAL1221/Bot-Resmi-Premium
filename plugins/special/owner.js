@@ -10,6 +10,7 @@ exports.run = {
          about: 'Owner & Creator'
       }], m, {
          org: "Pak Zainal Dev's Network",
+         website: 'https://api.neoxr.my.id',
          website: 'https://hagozox.repl.co/',
          email: 'hagozox@gmail.com'
       })
