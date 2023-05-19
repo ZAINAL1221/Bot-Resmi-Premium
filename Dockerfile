@@ -14,6 +14,7 @@ RUN apt-get update && \
   nodejs\
   ffmpeg \
   bash \
+  yarn \
   imagemagick \
   webp && \
   apt-get upgrade -y && \
@@ -21,7 +22,7 @@ RUN apt-get update && \
 
 COPY package.json .
 
-RUN npm install
+RUN npm install && yarn install
 
 COPY . .
 
