@@ -1,11 +1,11 @@
 {
-   "name": "Khoiyrul-Botz",
+   "name": "® Khoiyrul Botz",
    "version": "1.0.0",
    "description": "WhatsApp Bot (Base)",
    "main": "index.js",
    "scripts": {
       "start": "node ."
-         },
+   },
    "engines": {
       "node": "14.x",
       "npm": "8.x"
