@@ -1,6 +1,6 @@
 const { Function, Scraper } = new (require('@neoxr/neoxr-js'))
 // Owner number
-global.owner = '6283838057050
+global.owner = '6283838057050'
 // Owner name
 global.owner_name = "Pak Zainal Dev's"
 // Database name (Default: database)
