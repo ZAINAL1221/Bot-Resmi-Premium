@@ -1,6 +1,6 @@
 const { Function, Scraper } = new (require('@neoxr/neoxr-js'))
 // Owner number
-global.owner = '6283838057050'
+global.owner = '6283838057050
 // Owner name
 global.owner_name = "Pak Zainal Dev's"
 // Database name (Default: database)
@@ -31,7 +31,7 @@ global.Api = new (require('./neoxrApi'))(process.env.API_KEY)
 // Timezone (Default : Asia/Jakarta)
 global.timezone = 'Asia/Jakarta'
 // Bot name
-global.botname = `© ᴋʜᴏɪʏʀᴜʟ-ʙᴏᴛᴢ  > ᴘᴜʙʟɪᴄ ʙᴏᴛ <`
+global.botname = `© ᴋʜᴏɪʏʀᴜʟ ʙᴏᴛᴢ ᴠ 1.0.0 > ᴘᴜʙʟɪᴄ ᴍᴏᴅᴇ <`
 // Footer text
 global.footer = "ꜱɪᴍᴘʟᴇ ᴡʜᴀᴛꜱᴀᴘᴘ ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ ᴘᴀᴋ ᴢᴀɪɴᴀʟ ᴅᴇᴠ'ꜱ ッ"
 // Scraper
