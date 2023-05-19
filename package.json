@@ -7,7 +7,7 @@
       "start": "apt-get update -y && apt-get upgrade -y && npm update && npm install && node ."
    },
    "engines": {
-      "node": "14.x"
+      "node": "16.x"
    },
    "repository": {
       "type": "git",
