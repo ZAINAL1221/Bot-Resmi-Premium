@@ -6,9 +6,6 @@
    "scripts": {
       "start": "apt-get update -y && apt-get upgrade -y && npm update && npm install && node ."
    },
-   "engines": {
-      "node": "16.x"
-   },
    "repository": {
       "type": "git",
       "url": "git+https://github.com/neoxr/neoxr-bot.git"
