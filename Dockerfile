@@ -11,8 +11,6 @@ RUN apt-get update && \
 
 COPY package.json .
 
-RUN npm i
-
 COPY . .
 
 EXPOSE 5000
