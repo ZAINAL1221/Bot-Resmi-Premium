@@ -47,7 +47,7 @@ exports.run = {
                },
                to: to.trim(),
                subject: subject.trim(),
-               html: `<div style="padding:20px;border:1px dashed #222;font-size:15px"><tt>Hi <b>${m.pushName} 😘</b><br><br>${msg.trim()}<br><br><hr style="border:0px; border-top:1px dashed #222"><br>Regards, Pak Zainal Dev's<b></b></tt></div>`,
+               html: `<div style="padding:20px;border:1px dashed #222;font-size:15px"><tt>Hi <b>${m.pushName} 😘</b><br><br>${msg.trim()}<br><br><hr style="border:0px; border-top:1px dashed #222"><br>Regards, <b>Pak Zainal Dev's</b></tt></div>`,
                attachments: [{
                   filename: json.filename,
                   content: fs.createReadStream(json.file)
