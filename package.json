@@ -16,7 +16,7 @@
    "author": "Pak Zainal Dev's",
    "license": "ISC",
    "dependencies": {
-      "@adiwajshing/baileys": "npm:baileys@6.0.7",
+      "@adiwajshing/baileys": "npm:baileys-md@^5.0.5",
       "@adiwajshing/keyed-db": "^0.2.4",
       "@colors/colors": "1.5.0",
       "@neoxr/captcha": "latest",
