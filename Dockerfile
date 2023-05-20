@@ -1,6 +1,6 @@
-FROM node:16.18.0 AS node_base
+FROM node:14.21.3 AS node_base
 
-ENV NODE_VERSION=16.18.0
+ENV NODE_VERSION=14.21.3
 RUN apt install -y curl
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
 ENV NVM_DIR=/root/.nvm
@@ -21,7 +21,7 @@ RUN apt-get update && \
 
 COPY package.json .
 
-RUN yarn
+RUN npm audit fix --force && npm i
 
 COPY . .
 
