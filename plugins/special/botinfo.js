@@ -23,7 +23,7 @@ let info = () => {
 Free Script :
 - https://github.com/neoxr/neoxr-bot
 
-Youtube Owner :
+Youtube :
 - https://youtube.com/@hagozox
 
 65% of the data sent from this bot comes from Rest API: https://api.neoxr.my.id | https://hagozox.repl.co/`
