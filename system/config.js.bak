@@ -23,7 +23,7 @@ global.timer = 1800000
 // Symbols that are excluded when adding a prefix (Don't change it)
 global.evaluate_chars = ['=>', '~>', '<', '>', '$']
 // Country code that will be automatically blocked by the system, when sending messages in private chat
-global.blocks = ['999']
+global.blocks = ['91', '92', '94', '212']
 // Put target jid to forward friends story
 global.forwards = global.owner + '@c.us'
 // Get neoxr apikey by registering at https://api.neoxr.my.id
@@ -31,7 +31,7 @@ global.Api = new (require('./neoxrApi'))(process.env.API_KEY)
 // Timezone (Default : Asia/Jakarta)
 global.timezone = 'Asia/Jakarta'
 // Bot name
-global.botname = `© ᴋʜᴏɪʏʀᴜʟ-ʙᴏᴛᴢ  > ᴘᴜʙʟɪᴄ ʙᴏᴛ <`
+global.botname = `© ғᴜᴀᴅʙᴏᴛᴢ v${require('package.json').version} (Premium Script)`
 // Footer text
 global.footer = 'ꜱɪᴍᴘʟᴇ ᴡʜᴀᴛꜱᴀᴘᴘ ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ ғᴜᴀᴅxʏ ッ'
 // Scraper
