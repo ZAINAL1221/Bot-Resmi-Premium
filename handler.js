@@ -190,7 +190,7 @@ module.exports = async (client, m, plugins, store) => {
             if (setting.self && !isOwner && !m.fromMe) return
             if (setting.pluginDisable.includes(name)) return client.reply(m.chat, Func.texted('bold', `🚩 Plugin disabled by Owner.`), m)
             if (!m.isGroup && !['owner'].includes(name) && chats && !isPrem && !users.banned && new Date() * 1 - chats.lastchat < global.timer) continue
-            if (!m.isGroup && !['owner', 'menfess', 'verify'].includes(name) && chats && !isPrem && !users.banned && setting.groupmode) return client.sendMessageModify(m.chat, `🚩 Using bot in private chat only for premium user, upgrade to premium plan only Rp. 10,000,- to get 1K limits for 1 month.\n\nIf you want to buy contact *${prefixes[0]}owner*`, m, {
+            if (!m.isGroup && !['owner', 'menfess', 'verify'].includes(name) && chats && !isPrem && !users.banned && setting.groupmode) return client.sendMessageModify(m.chat, `🚩 Using bot in private chat only for premium user, upgrade to premium plan only Rp. 2,000,- to get 2K limits for 1 month.\n\nIf you want to buy contact *${prefixes[0]}owner*`, m, {
                largeThumb: true,
                thumbnail: await Func.fetchBuffer('https://telegra.ph/file/0b32e0a0bb3b81fef9838.jpg'),
                url: setting.link
@@ -208,7 +208,7 @@ module.exports = async (client, m, plugins, store) => {
             })
             if (!['verify', 'exec'].includes(name) && !m.isGroup && users && !users.banned && !users.verified && setting.verify) return client.sendMessageModify(m.chat, teks, m, {
                largeThumb: true,
-               thumbnail: await Func.fetchBuffer('https://telegra.ph/file/31601aee3fdf941bebbc4.jpg')
+               thumbnail: await Func.fetchBuffer('https://telegra.ph/file/ef18b1c12bc3778804fb5.jpg')
             })
             if (!['verify', 'exec'].includes(name) && m.isGroup && users && !users.banned && !users.verified && setting.verify) return client.reply(m.chat, `🚩 Your number has not been verified, verify by sending *${isPrefix ? isPrefix : ''}reg <email>* in private chat.`, m)
             if (m.isGroup && !['activation', 'groupinfo', 'exec', 'makeAdmin'].includes(name) && groupSet.mute) continue

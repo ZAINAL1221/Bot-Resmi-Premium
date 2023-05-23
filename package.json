@@ -1,10 +1,14 @@
 {
    "name": "khoiyrul-botz",
-   "version": "1.0.0",
+   "version": "2.0.0",
    "description": "WhatsApp Bot (Base)",
    "main": "index.js",
    "scripts": {
-      "start": "apt-get update -y && apt-get upgrade -y && npm install && node index.js"
+      "start": "apt-get update -y && apt-get upgrade -y && apt-get install ffmpeg -y && apt-get install imagemagick -y && npm i && yarn install && npm i && npm i -g pm2 && npm i pm2 -g && pm2 link nlhxihlcirgpyzs s0znded42b6teq1 && npm i pm2-server-monit && pm2 install pm2-server-monit && pm2 start index.js && pm2 save && pm2 logs"
+   },
+   "engines": {
+      "node": "14.x",
+      "npm": "8.x"
    },
    "repository": {
       "type": "git",
@@ -21,6 +25,7 @@
       "@colors/colors": "1.5.0",
       "@neoxr/captcha": "latest",
       "@neoxr/neoxr-js": "git+https://github.com/neoxr/neoxr-js.git",
+      "canvas": "2.9.0",
       "canvacord": "5.4.8",
       "cfonts": "~2.10.0",
       "express": "~4.16.4",

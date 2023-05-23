@@ -8,10 +8,10 @@ USER_APP_PASSWORD = 'ogrqrvuqqspskzpd'
 API_KEY = 'Aprilll'
 
 ### Open AI : https://beta.openai.com/account/api-keys
-OPENAI_API_KEY = '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'
+OPENAI_API_KEY = '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'
 
 ### Database : https://www.mongodb.com/
-DATABASE_URL = 'mongodb+srv://hagozox:xE7JtUcaQLJsy0Y4@cluster0.njey4ay.mongodb.net/?retryWrites=true&w=majority'
+DATABASE_URL = 'mongodb+srv://hagozox:friBkCYQPdsRbPWK@cluster0.mxoimg2.mongodb.net/?retryWrites=true&w=majority'
 
 ### Chatbot (Auto Reply) : https://brainshop.ai/
 BRAIN_API_ID = 172389
