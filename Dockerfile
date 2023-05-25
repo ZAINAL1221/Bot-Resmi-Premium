@@ -1,6 +1,6 @@
-FROM node:15.14.0 AS node_base
+FROM node:14.21.3 AS node_base
 
-ENV NODE_VERSION=15.14.0
+ENV NODE_VERSION=14.21.3
 RUN apt install -y curl
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
 ENV NVM_DIR=/root/.nvm

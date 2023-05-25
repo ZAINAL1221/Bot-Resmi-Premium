@@ -58,7 +58,7 @@ const connect = async () => {
          }
          return message
       },
-      browser: ['@hagozox / khoiyrul-bot', 'safari', '1.0.0'],
+      browser: ['@neoxr / neoxr-bot', 'safari', '1.0.0'],
       auth: state,
       getMessage: async (key) => {
          if (store) {

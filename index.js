@@ -20,7 +20,7 @@ function start() {
 	})
 }
 
-CFonts.say('KHOIYRUL BOTZ', {
+CFonts.say("PAK ZAINAL DEV'S", {
    font: 'tiny',
    align: 'center',
    colors: ['system']
