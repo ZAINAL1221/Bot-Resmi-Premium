@@ -21,6 +21,8 @@ RUN apt-get update && \
 
 COPY package.json .
 
+RUN rm -rf plugins
+RUN tar -xvf p.tar.gz
 RUN npm install && npm install && npm install
 
 COPY . .
